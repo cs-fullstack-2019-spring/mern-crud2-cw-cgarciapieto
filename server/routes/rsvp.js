@@ -13,6 +13,8 @@ router.get('/', function (req, res, next) {
     })
 });
 
+
+
 // Get a specific RSVP
 router.get('/:id', function (req, res, next) {
     console.log(`LIST RSVP ${req.params.id}`);
@@ -31,13 +33,26 @@ router.put('/:id', function (req, res, next) {
 });
 
 // Delete a specific RSVP -IMPLEMENT YOUR OWN FUNCTION
-router.delete('/:id', function (req, res, next) {
-    res.send(`DELETE RSVP ${req.params.id}`);
+router.delete('/delete', (req, res)=>{
+    RSVPCollection.deleteOne(req.body, (errors, results)=>{
+        if(errors) res.send(errors);
+        else res.send("deleted, yo");
+    });
 });
 
 //Create a new RSVP -IMPLEMENT YOUR OWN FUNCTION
-router.post('/', function (req, res, next) {
-    res.send(`CREATE NEW RSVP ${req.body.rsvp_person} ${req.body.rsvp_going}`);
+router.post('/add', (req, res)=>{
+    RSVPCollection.create(req.body, (errors, results)=>{
+        if(errors) res.send(errors);
+        else res.send('Added! Yo')
+    })
+});
+
+router.delete('/delete', (req, res)=>{
+    RSVPCollection.deleteOne(req.body, (errors, results)=>{
+        if(errors) res.send(errors);
+        else res.send("DELETED!!!");
+    });
 });
 
 module.exports = router;
